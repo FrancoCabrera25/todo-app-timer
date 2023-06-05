@@ -1,0 +1,28 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <div class="task-form-container">
+        <h1>{{ title }}</h1>
+        <mat-form-field appearance="fill">
+            <mat-label>Title</mat-label>
+            <input matInput formControlName="title">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description"></textarea>
+        </mat-form-field>
+
+        <div>
+            <h3 class="title-selected-priority">Select priority</h3>
+            <mat-radio-group aria-label="Select an option" formControlName="priority">
+                <mat-radio-button *ngFor="let priority of taskPriority" [value]="priority">
+                    {{ priority }}
+                </mat-radio-button>
+            </mat-radio-group>
+
+        </div>
+        <div class="button-actions">
+            <button class='button' mat-raised-button type="button" (click)="close()">{{ buttonSecondaryText }}</button>
+            <button class='button' mat-raised-button  type="submit" color="primary" [disabled]="!form.valid">{{ buttonPrincipalText }}</button>
+        </div>
+    </div>
+</form>

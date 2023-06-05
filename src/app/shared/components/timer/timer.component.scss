@@ -1,0 +1,30 @@
+svg {
+  display: block;
+  margin: 5px auto;
+}
+
+#loader 
+{ fill: #0088cc }
+
+#border 
+{ fill: #00517a }
+
+
+.svg-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: auto;
+}
+
+.svg-container svg {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.button-time-actions{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}

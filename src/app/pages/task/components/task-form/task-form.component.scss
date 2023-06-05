@@ -1,0 +1,23 @@
+.task-form-container{
+    padding: 0 16px;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin: 32px 0 0;
+}
+
+.button-actions{
+    margin: 16px 0;
+    padding: 4px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.title-selected-priority{
+    margin-bottom: 1px;
+    padding: 0 4px;
+}
+
+.button{
+    margin: 4px
+}

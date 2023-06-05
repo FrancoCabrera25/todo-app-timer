@@ -64,6 +64,9 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "publicHost": "http://localhost:4200"
+          },
           "configurations": {
             "production": {
               "browserTarget": "todo-timer-app:build:production"
