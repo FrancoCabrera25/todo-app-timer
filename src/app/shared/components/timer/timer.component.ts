@@ -34,14 +34,13 @@ export class TimerComponent implements OnInit, OnDestroy {
     public countdown = 30;
     public count = 0;
     public interval = 1 * 1000;
-    @Input() duration: number = 2;
+    @Input() duration: number = 0;
     @Output() stopEvent = new EventEmitter<number>();
-
-    constructor(private changeDetector : ChangeDetectorRef) {}
+    @Output() startEvent = new EventEmitter<void>();
+    constructor(private changeDetector: ChangeDetectorRef) {}
     ngOnInit(): void {
         this.duration = this.duration * 60;
     }
-
 
     public start(): void {
         if (this.isRunning) {
@@ -54,12 +53,13 @@ export class TimerComponent implements OnInit, OnDestroy {
             .subscribe(() => {
                 this.drawerTimer();
                 this.count++;
-                this.timeUsed = (this.count / 60);
+                this.timeUsed = this.count / 60;
                 this.countdown = this.duration - Math.floor(this.count / 60);
                 if (this.count > this.duration) {
                     this.stop();
                 }
             });
+        this.startEvent.emit();
     }
 
     private drawerTimer(): void {
@@ -69,8 +69,8 @@ export class TimerComponent implements OnInit, OnDestroy {
         const π = Math.PI;
         const α = (this.count / this.duration) * 360;
         const r = (α * π) / 180;
-        const x = Math.sin(r) *  125;
-        const y = Math.cos(r) * - 125;
+        const x = Math.sin(r) * 125;
+        const y = Math.cos(r) * -125;
         const mid = α > 180 ? 1 : 0;
         const anim =
             'M 0 0 v -125 A 125 125 1 ' + mid + ' 1 ' + x + ' ' + y + ' z';

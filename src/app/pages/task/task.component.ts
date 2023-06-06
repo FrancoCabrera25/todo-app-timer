@@ -32,11 +32,16 @@ export class TaskComponent implements OnInit, OnDestroy {
         });
     }
     public updateTimeUsed(time: number, task: Task): void {
+        console.log("time",);
         const updateTask: Task = {
             ...task,
             timeUsed: task.timeUsed + time,
         };
         this.taskService.updateTask(updateTask);
+    }
+
+    public updateStatus(task: Task): void {
+        
     }
     
     ngOnDestroy(): void {
