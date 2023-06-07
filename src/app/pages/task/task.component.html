@@ -1,14 +1,29 @@
-<div class="task-container">
-    <ng-container *ngFor="let task of taskList">
-        <app-task-card [task]="task" 
-        (stopTimerEvent)="updateTimeUsed($event, task)"
-        (startTimerEvent)="updateStatus(task)"
-        ></app-task-card>
-    </ng-container>
+<div class="container" *ngIf="taskList.length !== 0">
+ <div>
+    <app-search (inputValueEvent)="filter($event)"></app-search>
+ </div>
+    <div class="task-container">
+        <ng-container *ngFor="let task of taskList | customfilter: 'title':filterValue">
+            <app-task-card [task]="task" 
+            (stopTimerEvent)="updateTimeUsed($event, task)"
+            (deleteEvent)="deleteTask($event)"
+            (updateEvent)="updateTask($event)"
+            (finishEvent)="updateStatus($event, taskStatusEnum.Finished)"
+            ></app-task-card>
+        </ng-container>
+    </div>
+    <div class="button-add">
+        <button mat-fab color="primary" aria-label="button add task"  (click)="addTask()">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
 </div>
 
-<div class="button-add">
-    <button mat-fab color="primary" aria-label="button add task" (click)="addTask()">
-        <mat-icon>add</mat-icon>
-    </button>
-</div>
+<ng-container *ngIf="taskList.length === 0">
+    <app-view-empty 
+    [title]="'You have not entered any task yet, add your first recipe'"
+    (onClickEvent)="addTask()"
+    [showButton]="true"
+    [buttonTitle]="'Add task'"
+    ></app-view-empty>
+</ng-container>

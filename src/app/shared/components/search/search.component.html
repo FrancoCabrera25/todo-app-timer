@@ -1,0 +1,6 @@
+<mat-form-field class="full" appearance="fill">
+	<mat-label>Filter</mat-label>
+	<input matInput (keyup)="handleKeyup($event)" 
+	[formControl]="inputSearch"
+	placeholder="Search tasks" #input />
+</mat-form-field>

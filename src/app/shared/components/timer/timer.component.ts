@@ -43,6 +43,7 @@ export class TimerComponent implements OnInit, OnDestroy {
     }
 
     public start(): void {
+        console.log("start");
         if (this.isRunning) {
             return;
         }
@@ -84,10 +85,12 @@ export class TimerComponent implements OnInit, OnDestroy {
         }
         this.isRunning = false;
         this.stopEvent.emit(this.timeUsed);
-        this.intervalSubscription.unsubscribe();
+             if (this.intervalSubscription) {
+            this.intervalSubscription.unsubscribe();
+          } 
     }
     ngOnDestroy(): void {
-        this.intervalSubscription.unsubscribe();
+   
         this.destroy$.next();
         this.destroy$.complete();
     }

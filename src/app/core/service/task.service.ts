@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Task } from '../../interfaces/task.interface';
+import { Task, TaskStatusEnum } from '../../interfaces/task.interface';
 import * as uuid from 'uuid';
 
 @Injectable({
@@ -11,17 +11,23 @@ export class TaskService {
     private currentTasksSubject = new BehaviorSubject<Task[]>([]);
     public currentTasks$ = this.currentTasksSubject.asObservable();
     constructor() {
-        this.loadTask();
+        this.load();
     }
 
-    public addTask(task: Task): void {
+    public add(task: Task): void {
         task.id = uuid.v4();
+        task.timeUsed = 0;
+        task.status = TaskStatusEnum.Pending;
         const current = [...this.currentTasksSubject.getValue(), task];
-        this.setTaskLocalStorage(current);
-        this.currentTasksSubject.next(current);
+        this.save(current);
     }
 
-    public updateTask(task: Task): void {
+    public save(task: Task[]): void {
+        this.setTaskLocalStorage(task);
+        this.currentTasksSubject.next(task);
+    }
+
+    public update(task: Task): void {
         const tasksList = this.currentTasksSubject.getValue().map((oldTask) => {
             if (oldTask.id === task.id) {
                 return {
@@ -36,7 +42,14 @@ export class TaskService {
         this.setTaskLocalStorage(tasksList);
     }
 
-    private loadTask(): void {
+    public delete(id: string): void {
+        const taskList = this.currentTasksSubject
+            .getValue()
+            .filter((task) => task.id !== id);
+
+        this.save(taskList);
+    }
+    private load(): void {
         this.currentTasksSubject.next(this.getTaskLocalStorage());
     }
 

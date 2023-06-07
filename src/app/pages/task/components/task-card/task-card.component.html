@@ -1,17 +1,23 @@
 <mat-card class="card-task-container">
     <mat-card-header>
-        <mat-card-title>{{ task.title }}
-            <span *ngIf="task.timeUsed">({{ task.timeUsed  | number:'1.2-2' }})</span> </mat-card-title>
-        <mat-card-subtitle>{{ task.priority }}</mat-card-subtitle>
+        <div class="card-header">
+            <mat-card-title class="title">{{ task.title }} </mat-card-title>
+            <div class="sub-title-container">
+                <mat-card-subtitle class="sub-title">{{ task.priority }}</mat-card-subtitle>
+                <!-- <mat-card-subtitle class="sub-title">{{ task.status }}</mat-card-subtitle> -->
+            </div>
+        </div>
     </mat-card-header>
     <mat-card-content class="">
         <span>{{ task.description }}</span>
-        <app-timer [duration]="30" (stopEvent)="stopTimer($event)"
-        (startEvent)="startTimer()"></app-timer>
+        <app-timer
+        *ngIf="task.status !== taskStatusEnum.Finished"
+        [duration]="30" (stopEvent)="stopTimer($event)" (startEvent)="startTimer()"></app-timer>
+        <span *ngIf="task.timeUsed">({{ task.timeUsed | number:'1.2-2' }})</span>
     </mat-card-content>
     <mat-card-actions>
-        <button mat-button>Delete</button>
-        <button mat-button>Update</button>
-        <button mat-button>Done</button>
+        <button mat-button (click)="onDelete()">Delete</button>
+        <button mat-button *ngIf="task.status !== taskStatusEnum.Finished" (click)="onUpdate()">Update</button>
+        <button mat-button *ngIf="task.status !== taskStatusEnum.Finished" (click)="onStatusFinish()">Finish</button>
     </mat-card-actions>
 </mat-card>
